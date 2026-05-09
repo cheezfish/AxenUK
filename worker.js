@@ -69,7 +69,7 @@ export default {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Axen UK <noreply@axenuk.com>',
+        from: 'Axen UK <noreply@comms.axenuk.com>',
         to: ['admin@axenuk.com'],
         subject,
         html,
