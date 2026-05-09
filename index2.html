@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axen | Algorithmic Energy Procurement</title>
+    
+    <!-- Google Fonts: Space Grotesk for a tech feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Space Grotesk', 'sans-serif'] },
+                    colors: { axen: { bg: '#050505', card: '#111111', neon: '#14F195', purple: '#9945FF' } }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-axen-bg text-gray-300 font-sans antialiased selection:bg-axen-neon selection:text-black">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 bg-axen-bg/80 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white tracking-widest">AXEN<span class="text-axen-neon">_</span></div>
+            <a href="#contact" class="px-6 py-2 rounded-md text-sm font-bold text-black bg-axen-neon hover:bg-white transition-colors duration-300">
+                INITIATE AUDIT
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative pt-40 pb-20 overflow-hidden">
+        <!-- Glowing background orb -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-axen-purple rounded-full blur-[120px] opacity-20 -z-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+            <div class="inline-block border border-white/10 bg-white/5 rounded-full px-4 py-1.5 text-xs text-gray-400 uppercase tracking-widest mb-8 backdrop-blur-sm">
+                <span class="inline-block w-2 h-2 rounded-full bg-axen-neon mr-2 animate-pulse"></span>
+                Connecting to UK Grid Data
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight uppercase">
+                Procure Energy with <br/>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-axen-purple to-axen-neon">Algorithmic Precision.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 font-light">
+                Axen bypasses traditional broker margins by injecting your consumption data directly into the wholesale UK energy market.
+            </p>
+            
+            <!-- Tech-style data boxes -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mt-16">
+                <div class="border border-white/10 bg-axen-card p-4 rounded-lg text-left">
+                    <p class="text-xs text-gray-500 uppercase">Suppliers Tracked</p>
+                    <p class="text-2xl text-white font-bold mt-1">42<span class="text-axen-neon">.</span></p>
+                </div>
+                <div class="border border-white/10 bg-axen-card p-4 rounded-lg text-left">
+                    <p class="text-xs text-gray-500 uppercase">Avg. Client Savings</p>
+                    <p class="text-2xl text-white font-bold mt-1">18.4%</p>
+                </div>
+                <div class="border border-white/10 bg-axen-card p-4 rounded-lg text-left">
+                    <p class="text-xs text-gray-500 uppercase">Execution Speed</p>
+                    <p class="text-2xl text-white font-bold mt-1">< 2ms</p>
+                </div>
+                <div class="border border-white/10 bg-axen-card p-4 rounded-lg text-left">
+                    <p class="text-xs text-gray-500 uppercase">Network Status</p>
+                    <p class="text-2xl text-axen-neon font-bold mt-1">ONLINE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terminal Lead Gen -->
+    <section id="contact" class="py-24 border-t border-white/10 relative">
+        <div class="max-w-3xl mx-auto px-6">
+            <div class="border border-white/10 rounded-xl bg-axen-card overflow-hidden shadow-2xl shadow-axen-purple/10">
+                <div class="bg-[#1a1a1a] px-4 py-3 border-b border-white/10 flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    <p class="ml-4 text-xs text-gray-500 font-mono">axen_secure_portal.exe</p>
+                </div>
+                <div class="p-8">
+                    <h2 class="text-2xl font-bold text-white mb-2">Request System Access</h2>
+                    <p class="text-sm text-gray-400 mb-8">Enter corporate details to generate a live market analysis.</p>
+                    
+                    <form class="space-y-5" onsubmit="event.preventDefault();">
+                        <div>
+                            <label class="block text-xs uppercase text-gray-500 mb-2 tracking-wider">Corporate Email</label>
+                            <input type="email" class="w-full bg-black border border-white/20 rounded px-4 py-3 text-white focus:border-axen-neon focus:outline-none transition-colors" placeholder="director@company.co.uk">
+                        </div>
+                        <div class="grid grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-xs uppercase text-gray-500 mb-2 tracking-wider">Company Number</label>
+                                <input type="text" class="w-full bg-black border border-white/20 rounded px-4 py-3 text-white focus:border-axen-neon focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase text-gray-500 mb-2 tracking-wider">Energy Profile</label>
+                                <select class="w-full bg-black border border-white/20 rounded px-4 py-3 text-white focus:border-axen-neon focus:outline-none transition-colors">
+                                    <option>Half-Hourly (HH)</option>
+                                    <option>Non Half-Hourly (NHH)</option>
+                                    <option>Multi-site Portfolio</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 bg-white hover:bg-axen-neon text-black font-bold py-4 rounded transition-colors duration-300">
+                            RUN ANALYSIS
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t border-white/10 text-center text-xs text-gray-600 font-mono">
+        <p>AXEN TECHNOLOGIES UK &copy; 2026 // SECURE 256-BIT ENCRYPTION</p>
+    </footer>
+
+</body>
+</html>

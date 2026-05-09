@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axen Business House (UK) Limited | Business Energy Consultants</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            dark: '#0B1120',
+                            blue: '#2563EB',
+                            light: '#F8FAFC',
+                            accent: '#06B6D4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Continuous Logo Marquee */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        .marquee-content img {
+            display: inline-block;
+            height: 36px;
+            width: auto;
+            margin: 0 48px;
+            filter: brightness(0) invert(1);
+            opacity: 0.75;
+            transition: opacity 0.3s ease;
+        }
+        .marquee-content img:hover {
+            filter: brightness(0) invert(1);
+            opacity: 1;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Hero Slideshow Overlay */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.7));
+        }
+    </style>
+</head>
+<body class="bg-brand-light text-slate-800 font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-4 xl:px-0">
+            <div class="flex justify-between items-center h-20">
+                <a href="#home" class="text-xl md:text-2xl font-bold tracking-tight text-brand-dark">
+                    Axen Business House<span class="text-brand-blue">.</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex space-x-6 items-center">
+                    <a href="#home" class="text-sm font-medium text-slate-600 hover:text-brand-blue transition">Home</a>
+                    <a href="#about" class="text-sm font-medium text-slate-600 hover:text-brand-blue transition">About Us</a>
+                    <a href="#services" class="text-sm font-medium text-slate-600 hover:text-brand-blue transition">Services</a>
+                    <a href="#join" class="text-sm font-medium text-slate-600 hover:text-brand-blue transition">Join Us</a>
+                    <a href="#complaint" class="text-sm font-medium text-slate-600 hover:text-brand-blue transition">Complaint</a>
+                    <a href="#contact" class="text-sm font-medium text-slate-600 hover:text-brand-blue transition">Contact Us</a>
+                    <a href="#quote" class="px-5 py-2.5 rounded-full text-sm font-medium text-white bg-brand-blue hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+                        Request a Quote
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME SECTION (With JS Slideshow) -->
+    <section id="home" class="relative h-screen min-h-[600px] flex flex-col justify-center overflow-hidden bg-brand-dark">
+        <!-- Background Image Container -->
+        <div id="hero-bg" class="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105" style="background-image: url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80');"></div>
+        <div class="absolute inset-0 hero-overlay z-10"></div>
+
+        <div class="relative z-20 max-w-7xl mx-auto px-4 xl:px-0 text-center mt-16">
+            <h2 class="text-brand-accent font-semibold tracking-widest uppercase mb-4">Welcome to Axen Business House (UK) Limited</h2>
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight max-w-4xl mx-auto">
+                Home for most competitive energy prices from live energy market
+            </h1>
+            <p class="text-2xl text-slate-300 font-light italic mb-10">"Choose Today Save Tomorrow"</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#quote" class="px-8 py-4 rounded-full text-white bg-brand-blue hover:bg-blue-700 transition font-semibold shadow-lg">Get Live Prices</a>
+                <a href="#services" class="px-8 py-4 rounded-full text-white bg-white/10 hover:bg-white/20 border border-white/20 transition font-semibold backdrop-blur-sm">View Services</a>
+            </div>
+        </div>
+
+        <!-- Supplier Logos Marquee -->
+        <div class="absolute bottom-0 w-full z-20 marquee-container py-4">
+            <!-- The content is duplicated to create a seamless infinite loop -->
+            <div class="marquee-content">
+                <img src="images/logos-nobg/BG.png" alt="British Gas">
+                <img src="images/logos-nobg/British-Gas-Lite.png" alt="British Gas Lite">
+                <img src="images/logos-nobg/Corona-Energy.png" alt="Corona Energy">
+                <img src="images/logos-nobg/Crown-Gas-Power.png" alt="Crown Gas & Power">
+                <img src="images/logos-nobg/Dyce-Energy-Logo.png" alt="Dyce Energy">
+                <img src="images/logos-nobg/EDF-Energy-Logo.png" alt="EDF Energy">
+                <img src="images/logos-nobg/Ecotricity-Logo.png" alt="Ecotricity">
+                <img src="images/logos-nobg/Engie-Logo.png" alt="Engie">
+                <img src="images/logos-nobg/Eon-next.png" alt="E.ON Next">
+                <img src="images/logos-nobg/Jelly-Fish-Logo.png" alt="Jelly Fish Energy">
+                <img src="images/logos-nobg/Octopus.png" alt="Octopus Energy">
+                <img src="images/logos-nobg/Pozitive-Energy-Solutions.png" alt="Pozitive Energy Solutions">
+                <img src="images/logos-nobg/SSE.png" alt="SSE">
+                <img src="images/logos-nobg/Sefe-Energy.png" alt="Sefe Energy">
+                <img src="images/logos-nobg/Smartest-Energy-Logo.png" alt="Smartest Energy">
+                <img src="images/logos-nobg/Total-Energies-UK.png" alt="TotalEnergies UK">
+                <img src="images/logos-nobg/UGP-logo.png" alt="UGP">
+                <img src="images/logos-nobg/Utilita.png" alt="Utilita">
+                <img src="images/logos-nobg/Valda_Energy_logo.png" alt="Valda Energy">
+                <img src="images/logos-nobg/YGP-Logo.png" alt="YGP">
+                <img src="images/logos-nobg/YU-ENERGY.png" alt="YU Energy">
+                <img src="images/logos-nobg/npower.png" alt="npower">
+                <img src="images/logos-nobg/ruby-energy.png" alt="Ruby Energy">
+                <img src="images/logos-nobg/scottishpower-logo.png" alt="ScottishPower">
+                <!-- Duplicated for seamless loop -->
+                <img src="images/logos-nobg/BG.png" alt="British Gas">
+                <img src="images/logos-nobg/British-Gas-Lite.png" alt="British Gas Lite">
+                <img src="images/logos-nobg/Corona-Energy.png" alt="Corona Energy">
+                <img src="images/logos-nobg/Crown-Gas-Power.png" alt="Crown Gas & Power">
+                <img src="images/logos-nobg/Dyce-Energy-Logo.png" alt="Dyce Energy">
+                <img src="images/logos-nobg/EDF-Energy-Logo.png" alt="EDF Energy">
+                <img src="images/logos-nobg/Ecotricity-Logo.png" alt="Ecotricity">
+                <img src="images/logos-nobg/Engie-Logo.png" alt="Engie">
+                <img src="images/logos-nobg/Eon-next.png" alt="E.ON Next">
+                <img src="images/logos-nobg/Jelly-Fish-Logo.png" alt="Jelly Fish Energy">
+                <img src="images/logos-nobg/Octopus.png" alt="Octopus Energy">
+                <img src="images/logos-nobg/Pozitive-Energy-Solutions.png" alt="Pozitive Energy Solutions">
+                <img src="images/logos-nobg/SSE.png" alt="SSE">
+                <img src="images/logos-nobg/Sefe-Energy.png" alt="Sefe Energy">
+                <img src="images/logos-nobg/Smartest-Energy-Logo.png" alt="Smartest Energy">
+                <img src="images/logos-nobg/Total-Energies-UK.png" alt="TotalEnergies UK">
+                <img src="images/logos-nobg/UGP-logo.png" alt="UGP">
+                <img src="images/logos-nobg/Utilita.png" alt="Utilita">
+                <img src="images/logos-nobg/Valda-Energy-logo.png" alt="Valda Energy">
+                <img src="images/logos-nobg/YGP-Logo.png" alt="YGP">
+                <img src="images/logos-nobg/YU-ENERGY.png" alt="YU Energy">
+                <img src="images/logos-nobg/npower.png" alt="npower">
+                <img src="images/logos-nobg/ruby-energy.png" alt="Ruby Energy">
+                <img src="images/logos-nobg/scottishpower-logo.png" alt="ScottishPower">
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 xl:px-0">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-brand-dark mb-6">About Us</h2>
+                    <div class="space-y-4 text-slate-600 leading-relaxed">
+                        <p>We are an independent energy consultant entity help SME and LARGE/ENTERPRISE business customers across UK to choose best prices from live energy market. Our offering has developed over 20 years to ensure SME and LARGE/ENTERPRISE customers to save on their monthly and yearly energy bills on acquisition, renewal and upgrade contracts.</p>
+                        <p>While offering best prices, we provide professional advises to our valued customers regarding any dispute between our customers and energy suppliers, meter issues, power cut, new connection, new metering. At Axen Business House, we help businesses throughout UK to take control of their utilities in order to save money, save time and cut carbon in the quest to achieve net zero.</p>
+                        <p>Imagine if someone wants to save up to 45% off your annual electricity, gas and water bills – that reflects substantial amount of savings for any business. That 45% annual savings may worth hundreds of thousands GBP which most customers do not realise. Our highly experienced and professional team ready to assist any business customers within UK to achieve such savings. This effectively means our customers can add those annual savings in their annual revenues from their business and can run the business with peace of mind.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm text-center">
+                        <div class="text-4xl font-bold text-brand-blue mb-2">20+</div>
+                        <div class="text-sm text-slate-500 font-medium">Years Experience</div>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm text-center">
+                        <div class="text-4xl font-bold text-brand-blue mb-2">45%</div>
+                        <div class="text-sm text-slate-500 font-medium">Up to Annual Savings</div>
+                    </div>
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 shadow-sm text-center col-span-2">
+                        <div class="text-2xl font-bold text-brand-dark mb-2">SME & Enterprise</div>
+                        <div class="text-sm text-slate-500 font-medium">Serving businesses across the UK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-24 bg-slate-50 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 xl:px-0">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-bold text-brand-dark mb-4">Our Services</h2>
+                <p class="text-slate-600 mb-4">Axen Business House offers best and most competitive electricity, gas and water quotes of fixed term contracts for all SME and LARGE/ENTERPRISE business customers from most active energy suppliers within United Kingdom.</p>
+                <p class="text-brand-blue font-semibold uppercase tracking-wide">More than just business energy brokers</p>
+            </div>
+
+            <div class="bg-white p-10 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100">
+                <h3 class="text-2xl font-bold text-center mb-10">Switch or Choose Your Supplier in 3 Easy Steps</h3>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Step 1 -->
+                    <div class="relative">
+                        <div class="text-6xl font-black text-slate-100 absolute -top-6 -left-2 z-0">1</div>
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-bold text-brand-dark mb-3">Tell us about your business</h4>
+                            <p class="text-sm text-slate-600">Help us with your business needs, any energy bill from your current energy supplier along with meter serial numbers and up to date meter readings.</p>
+                        </div>
+                    </div>
+                    <!-- Step 2 -->
+                    <div class="relative">
+                        <div class="text-6xl font-black text-slate-100 absolute -top-6 -left-2 z-0">2</div>
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-bold text-brand-dark mb-3">Market Comparison</h4>
+                            <p class="text-sm text-slate-600">We constantly compare and monitor live energy market from all UK energy suppliers. This allows us to offer you the best available deals, price plans, and contract terms. <em>N.B: Prices subject to successful credit check & availability.</em></p>
+                        </div>
+                    </div>
+                    <!-- Step 3 -->
+                    <div class="relative">
+                        <div class="text-6xl font-black text-slate-100 absolute -top-6 -left-2 z-0">3</div>
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-bold text-brand-dark mb-3">Make the Right Decision</h4>
+                            <p class="text-sm text-slate-600">We manage all paperwork and supplier communication from start to finish. We follow up with existing clients, resolve queries, and assist again on renewal time to find the best market prices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REQUEST A QUOTE SECTION -->
+    <section id="quote" class="py-24 bg-brand-dark text-white relative overflow-hidden">
+        <!-- Abstract Bg Glow -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-brand-blue rounded-full filter blur-[100px] opacity-20"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 xl:px-0 relative z-10">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold mb-4">Request A Quote</h2>
+                <p class="text-slate-300">Best Prices from UK LIVE ENERGY Market awaits. Please fill up the box below with your information.</p>
+            </div>
+
+            <!-- Note: Action URL should be your form processor, e.g., Formspree -->
+            <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="bg-white/5 border border-white/10 backdrop-blur-md p-8 md:p-12 rounded-2xl space-y-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Business Name *</label>
+                        <input type="text" name="Business Name" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Contact Person’s Name *</label>
+                        <input type="text" name="Contact Name" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Site Address *</label>
+                    <input type="text" name="Site Address" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Email Address *</label>
+                        <input type="email" name="Email" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Phone Number</label>
+                        <input type="tel" name="Phone" class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Mobile Number *</label>
+                        <input type="tel" name="Mobile" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Current Suppliers</label>
+                        <input type="text" name="Current Suppliers" class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Contract End Date</label>
+                        <input type="date" name="Contract End Date" class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white" style="color-scheme: dark;">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-1">Meter Serial Numbers</label>
+                        <input type="text" name="Meter Serial Numbers" placeholder="Elec/Gas/Water" class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-slate-300 mb-1">Special Circumstances</label>
+                    <textarea name="Special Circumstances" rows="3" placeholder="e.g., Change of tenancy, New Main Line Connection Required, New Meter Required..." class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 px-6 bg-brand-blue hover:bg-blue-600 text-white font-bold text-lg rounded-lg shadow-lg transition">
+                    SUBMIT
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- JOIN US SECTION -->
+    <section id="join" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 xl:px-0 grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-brand-dark mb-4">Join Us</h2>
+                <p class="text-lg text-slate-600 mb-6">We are happy to hire energy consultants who can join our experienced AXEN TEAM. Become An Energy Partner with AXEN BUSINESS HOUSE.</p>
+                <div class="bg-blue-50 border-l-4 border-brand-blue p-6 rounded-r-lg">
+                    <p class="text-sm text-slate-700 font-medium">Fill out the form to register your interest, and our partnership team will reach out to discuss how we can grow together.</p>
+                </div>
+            </div>
+            
+            <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="bg-white border border-slate-200 p-8 rounded-2xl shadow-xl shadow-slate-100">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="text" name="Name" placeholder="Name *" required class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                        <input type="text" name="Business Name" placeholder="Business Name" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    </div>
+                    <input type="text" name="Company Address" placeholder="Company Address" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    <input type="text" name="Trading Address" placeholder="Trading Address" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="tel" name="Phone Number" placeholder="Phone Number" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                        <input type="tel" name="Mobile Number" placeholder="Mobile Number *" required class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="email" name="Email Address" placeholder="Email Address *" required class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                        <input type="url" name="Website" placeholder="Website" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    </div>
+                    <input type="text" name="ADR Registration Number" placeholder="ADR Registration Number" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    <button type="submit" class="w-full py-3 bg-brand-dark hover:bg-slate-800 text-white font-bold rounded-lg transition">Submit Application</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- COMPLAINT SECTION -->
+    <section id="complaint" class="py-24 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 xl:px-0">
+            <h2 class="text-3xl font-bold text-brand-dark mb-8 text-center">Complaints Procedure</h2>
+            <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-200 text-slate-600 text-sm md:text-base space-y-6">
+                <p>We at <strong>Axen Business House (UK) Limited</strong> pride ourselves on excellent customer service and the manner in which we conduct our business. However, we also understand that things can go wrong, and we take all complaints very seriously and are committed to continuously improving our services. If you are unhappy with any of our sales activities, marketing activities or just the general level of service you have received, we will do our utmost to correct these issues.</p>
+                
+                <div>
+                    <p class="font-bold text-brand-dark mb-2">If you are unhappy and wish to make a complaint you can do so in several ways:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Write to us at:</strong> Flat 803, 450, Charter House, High Road, Ilford, Essex, IG1 1ZH</li>
+                        <li><strong>Telephone us on:</strong> 07405439900</li>
+                        <li><strong>Email us at:</strong> axenbusinesshouse@outlook.com</li>
+                    </ul>
+                </div>
+
+                <p>Any client who makes a complaint will be treated with the utmost courtesy and respect. We will investigate and inform you of the likely timescales to resolve the issues. We strive to deal with any complaint within 48-72 working hours, but in some instances, this can take longer; if this is the case we will inform you of this in writing should more than 48-72 working hours lapse without resolution.</p>
+                
+                <p>If after 7 days your complaint remains unresolved or if you are unhappy with the resolution, with your consent we will escalate your complaint to the Director of AXEN BUSINESS HOUSE (UK) LIMITED. If you are still unhappy with the decision of the Director; or we have not been able to resolve your complaint; or if it has been unresolved for more than 8 weeks, you have the right to escalate your complaint to Ombudsman Services. This service is impartial and free for clients to use.</p>
+                
+                <p>The contact details are: <br> <a href="http://www.ombudsman-services.org/energy.html" target="_blank" class="text-brand-blue font-semibold hover:underline">www.ombudsman-services.org/energy.html</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT US & FOOTER -->
+    <section id="contact" class="py-24 bg-brand-dark text-slate-300 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 xl:px-0">
+            <div class="grid md:grid-cols-2 gap-16">
+                <!-- Contact Details -->
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-8">Contact Us</h2>
+                    
+                    <div class="space-y-6 text-sm">
+                        <div>
+                            <h4 class="text-white font-bold text-lg mb-1">Axen Business House (UK) Limited</h4>
+                            <p>Co. Reg No: 17085162</p>
+                            <p class="mt-2"><strong>Co. Reg Address:</strong><br>Flat 803, Charter House, 450<br>High Road, Ilford, Essex, IG1 1ZH</p>
+                        </div>
+                        
+                        <div class="pt-4 border-t border-slate-800">
+                            <p><strong>Corporate Address:</strong> [To Be Updated]</p>
+                            <p><strong>ADR Registration Number:</strong> [To Be Updated]</p>
+                            <p><strong>ICO Registration Number:</strong>[To Be Updated]</p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-800">
+                            <p class="flex items-center text-lg"><span class="font-bold text-white w-24">Phone:</span> <a href="tel:07405439900" class="text-brand-accent hover:underline">07405439900</a></p>
+                            <p class="flex items-center text-lg mt-2"><span class="font-bold text-white w-24">Email:</span> <a href="mailto:axenbusinesshouse@outlook.com" class="text-brand-accent hover:underline break-all">axenbusinesshouse@outlook.com</a></p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-800 text-slate-400">
+                            <p><strong>Opening Hours:</strong></p>
+                            <p>Monday – Friday (8:30am to 5:00pm)</p>
+                            <p class="text-xs mt-1">Excluding Bank Holidays or Any Public Holidays</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white/5 border border-white/10 p-8 rounded-2xl">
+                    <h3 class="text-2xl font-bold text-white mb-2">Any Questions, please drop us a line 😊</h3>
+                    <p class="text-sm text-slate-400 mb-6">Send us a direct message and our team will get back to you shortly.</p>
+                    
+                    <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="space-y-4">
+                        <input type="text" name="Name" placeholder="Your Name" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent outline-none text-white">
+                        <input type="email" name="Email" placeholder="Your Email" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent outline-none text-white">
+                        <textarea name="Message" rows="4" placeholder="Your Message" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent outline-none text-white"></textarea>
+                        <button type="submit" class="w-full py-4 bg-brand-blue hover:bg-blue-600 text-white font-bold rounded-lg transition">
+                            SEND ****
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#050810] py-6 border-t border-slate-800 text-center text-xs text-slate-500">
+        &copy; 2026 Axen Business House (UK) Limited. All rights reserved. 
+    </footer>
+
+    <!-- Simple JS for Hero Background Slideshow -->
+    <script>
+        const bgImages =[
+            'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80', // Office/Corporate
+            'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80', // Modern Tech/Energy
+            'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80'  // Business Building
+        ];
+        
+        let currentBgIndex = 0;
+        const heroBg = document.getElementById('hero-bg');
+
+        setInterval(() => {
+            currentBgIndex = (currentBgIndex + 1) % bgImages.length;
+            heroBg.style.opacity = '0.5'; // Fade out slightly
+            
+            setTimeout(() => {
+                heroBg.style.backgroundImage = `url('${bgImages[currentBgIndex]}')`;
+                heroBg.style.opacity = '1'; // Fade back in
+            }, 500); // Wait for fade out to change image
+        }, 5000); // Change image every 5 seconds
+    </script>
+</body>
+</html>
