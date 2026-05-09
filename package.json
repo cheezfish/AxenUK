@@ -1,0 +1,25 @@
+{
+  "name": "axenuk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "worker.js",
+  "scripts": {
+    "build": "tailwind -i ./input.css -o ./output.css --minify",
+    "watch": "tailwind -i ./input.css -o ./output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheezfish/AxenUK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cheezfish/AxenUK/issues"
+  },
+  "homepage": "https://github.com/cheezfish/AxenUK#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
+}
