@@ -70,7 +70,7 @@ export default {
       },
       body: JSON.stringify({
         from: 'Axen UK <noreply@axenuk.com>',
-        to: ['axenbusinesshouse@outlook.com'],
+        to: ['admin@axenuk.com'],
         subject,
         html,
       }),
