@@ -347,22 +347,28 @@
         <div class="max-w-4xl mx-auto px-4 xl:px-0">
             <h2 class="text-3xl font-bold text-brand-dark mb-8 text-center">Complaints Procedure</h2>
             <div class="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-slate-200 text-slate-600 text-sm md:text-base space-y-6">
-                <p>We at <strong>Axen Business House (UK) Limited</strong> pride ourselves on excellent customer service and the manner in which we conduct our business. However, we also understand that things can go wrong, and we take all complaints very seriously and are committed to continuously improving our services. If you are unhappy with any of our sales activities, marketing activities or just the general level of service you have received, we will do our utmost to correct these issues.</p>
-                
+                <p>We at <strong>Axen Business House (UK) Limited</strong> pride ourselves on excellent customer service and the manner in which we conduct our business. However, we also understand that things can go wrong. We take all complaints very seriously and are committed to continuously improving our services. If you are unhappy with any of our sales activities, marketing activities, or the general level of service you have received, we will do our utmost to put things right.</p>
+
                 <div>
-                    <p class="font-bold text-brand-dark mb-2">If you are unhappy and wish to make a complaint you can do so in several ways:</p>
+                    <p class="font-bold text-brand-dark mb-2">If you wish to make a complaint, you can do so in several ways:</p>
                     <ul class="list-disc pl-5 space-y-2">
-                        <li><strong>Write to us at:</strong> Flat 803, 450, Charter House, High Road, Ilford, Essex, IG1 1ZH</li>
-                        <li><strong>Telephone us on:</strong> 07405439900</li>
-                        <li><strong>Email us at:</strong> complaints@axenuk.com</li>
+                        <li><strong>Write to us at:</strong> Flat 803, 450 Charter House, High Road, Ilford, Essex, IG1 1ZH</li>
+                        <li><strong>Telephone us on:</strong> 07405 439900</li>
+                        <li><strong>Email us at:</strong> <a href="mailto:complaints@axenuk.com" class="text-brand-blue hover:underline">complaints@axenuk.com</a></li>
                     </ul>
                 </div>
 
-                <p>Any client who makes a complaint will be treated with the utmost courtesy and respect. We will investigate and inform you of the likely timescales to resolve the issues. We strive to deal with any complaint within 48-72 working hours, but in some instances, this can take longer; if this is the case we will inform you of this in writing should more than 48-72 working hours lapse without resolution.</p>
-                
-                <p>If after 7 days your complaint remains unresolved or if you are unhappy with the resolution, with your consent we will escalate your complaint to the Director of AXEN BUSINESS HOUSE (UK) LIMITED. If you are still unhappy with the decision of the Director; or we have not been able to resolve your complaint; or if it has been unresolved for more than 8 weeks, you have the right to escalate your complaint to Ombudsman Services. This service is impartial and free for clients to use.</p>
-                
-                <p>The contact details are: <br> <a href="http://www.ombudsman-services.org/energy.html" target="_blank" class="text-brand-blue font-semibold hover:underline">www.ombudsman-services.org/energy.html</a></p>
+                <p>Any client who makes a complaint will be treated with the utmost courtesy and respect. We will investigate your complaint and keep you informed of the expected timescales for resolution. We strive to resolve all complaints within 48–72 working hours. In some instances this may take longer; if so, we will notify you in writing if more than 48–72 working hours pass without resolution.</p>
+
+                <p>If after 7 days your complaint remains unresolved, or if you are unhappy with the outcome, we will — with your consent — escalate your complaint to the Director of Axen Business House (UK) Limited. If you remain dissatisfied with the Director's decision, or if your complaint has been unresolved for more than 8 weeks, you have the right to refer your complaint to the Energy Ombudsman. This service is impartial and free to use.</p>
+
+                <div>
+                    <p class="font-bold text-brand-dark mb-2">Energy Ombudsman contact details:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Email:</strong> <a href="mailto:enquiry@energyombudsman.org" class="text-brand-blue hover:underline">enquiry@energyombudsman.org</a></li>
+                        <li><strong>Website:</strong> <a href="https://www.energyombudsman.org" target="_blank" class="text-brand-blue hover:underline">www.energyombudsman.org</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -444,6 +450,61 @@
                 heroBg.style.opacity = '1'; // Fade back in
             }, 500); // Wait for fade out to change image
         }, 5000); // Change image every 5 seconds
+    </script>
+
+    <!-- Status Modal -->
+    <style>
+        #status-modal { display:none;position:fixed;inset:0;z-index:9999;background:rgba(11,17,32,0.7);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:24px; }
+        #status-modal.open { display:flex; }
+        #modal-card { background:#fff;border-radius:20px;padding:48px 40px 40px;max-width:400px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,0,0,0.3);animation:modal-in 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+        @keyframes modal-in { from { opacity:0;transform:scale(0.92)translateY(12px); } to { opacity:1;transform:scale(1)translateY(0); } }
+        #modal-icon-wrap { width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 24px; }
+        #modal-icon-wrap svg { width:32px;height:32px; }
+        #modal-title { font-family:Inter,sans-serif;font-size:22px;font-weight:700;color:#0B1120;margin:0 0 10px; }
+        #modal-body { font-family:Inter,sans-serif;font-size:15px;color:#64748b;margin:0 0 32px;line-height:1.7; }
+        #modal-btn { display:inline-block;padding:13px 40px;border-radius:10px;font-family:Inter,sans-serif;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:opacity 0.2s; }
+        #modal-btn:hover { opacity:0.88; }
+    </style>
+
+    <div id="status-modal">
+        <div id="modal-card">
+            <div id="modal-icon-wrap"></div>
+            <h2 id="modal-title"></h2>
+            <p id="modal-body"></p>
+            <button id="modal-btn" onclick="document.getElementById('status-modal').classList.remove('open');history.replaceState(null,'',location.pathname);">Done</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const params = new URLSearchParams(location.search);
+            const status = params.get('status');
+            if (!status) return;
+
+            const wrap = document.getElementById('modal-icon-wrap');
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            const btn = document.getElementById('modal-btn');
+
+            if (status === 'success') {
+                wrap.style.background = '#f0fdf4';
+                wrap.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+                title.textContent = 'Message received';
+                body.textContent = 'Thank you for getting in touch. We\'ll respond within 24–48 working hours.';
+                btn.style.background = '#2563EB';
+                btn.style.color = '#fff';
+            } else {
+                wrap.style.background = '#fef2f2';
+                wrap.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+                title.textContent = 'Something went wrong';
+                body.textContent = 'We couldn\'t send your message. Please try again or email us at admin@axenuk.com.';
+                btn.style.background = '#0B1120';
+                btn.style.color = '#fff';
+            }
+
+            document.getElementById('status-modal').classList.add('open');
+            history.replaceState(null, '', location.pathname);
+        })();
     </script>
 </body>
 </html>
