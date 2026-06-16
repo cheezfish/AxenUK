@@ -1,10 +1,19 @@
+const GITHUB_REPO = 'cheezfish/AxenUK';
+const GITHUB_FILE = 'index.html';
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
 const AUTO_REPLY_HTML = `
 <div style="font-family:Arial,sans-serif;font-size:14px;color:#333;max-width:600px">
   <p>Thank you for getting in touch with Axen Business House (UK) Limited, an independent energy broker. Someone will be assigned to your case immediately. We endeavour to respond within the next 24–48 working hours.</p>
   <p>Ensuring best services and best quotes from the live energy market.</p>
   <p>Best Regards,<br><strong>AXEN BUSINESS HOUSE</strong></p>
   <hr style="border:none;border-top:1px solid #e2e8f0;margin:24px 0">
-  <p style="font-size:11px;color:#888;line-height:1.6">This email and any attachments are confidential to the intended recipient and remain the property of the sender. If you are not the intended recipient, please advise the sender, delete this email, and do not use or disclose it. AXEN BUSINESS HOUSE (UK) LIMITED is not responsible for the accuracy or completeness of this email as it has been transmitted over a public network. AXEN BUSINESS HOUSE (UK) LIMITED is incorporated and registered in England and Wales with company number 17085162. Registered Office: Flat 803, 450, Charter House, High Road, Essex, IG2 7JB.<br><br>Please consider the environment before printing this email.</p>
+  <p style="font-size:11px;color:#888;line-height:1.6">This email and any attachments are confidential to the intended recipient and remain the property of the sender. If you are not the intended recipient, please advise the sender, delete this email, and do not use or disclose it. AXEN BUSINESS HOUSE (UK) LIMITED is not responsible for the accuracy or completeness of this email as it has been transmitted over a public network. AXEN BUSINESS HOUSE (UK) LIMITED is incorporated and registered in England and Wales with company number 17085162. Registered Office: 16 Centreway, Ilford, IG1 1ND.<br><br>Please consider the environment before printing this email.</p>
 </div>
 `;
 
@@ -24,8 +33,95 @@ async function sendEmail(env, { to, subject, html }) {
   });
 }
 
+function jsonResponse(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
+  });
+}
+
+function encodeBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = '';
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  return btoa(binary);
+}
+
+function decodeBase64(b64) {
+  const binary = atob(b64.replace(/\n/g, ''));
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
+async function handleAdmin(fields, env) {
+  if (fields['password'] !== env.ADMIN_PASSWORD) {
+    return jsonResponse({ error: 'Invalid password' }, 401);
+  }
+
+  let changes;
+  try {
+    changes = JSON.parse(fields['changes']);
+  } catch {
+    return jsonResponse({ error: 'Invalid changes payload' }, 400);
+  }
+
+  // Fetch current file from GitHub
+  const ghRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+    headers: {
+      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'User-Agent': 'AxenUK-Admin',
+    },
+  });
+
+  if (!ghRes.ok) {
+    return jsonResponse({ error: 'Failed to fetch file from GitHub' }, 502);
+  }
+
+  const ghData = await ghRes.json();
+  const sha = ghData.sha;
+  let html = decodeBase64(ghData.content);
+
+  // Apply each text change between markers
+  for (const [key, value] of Object.entries(changes)) {
+    const regex = new RegExp(`(<!-- E:${key} -->)[\\s\\S]*?(<!-- /E:${key} -->)`);
+    if (regex.test(html)) {
+      html = html.replace(regex, `$1${value}$2`);
+    }
+  }
+
+  // Commit updated file to GitHub
+  const commitRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${GITHUB_FILE}`, {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${env.GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+      'User-Agent': 'AxenUK-Admin',
+    },
+    body: JSON.stringify({
+      message: 'Content update via admin panel',
+      content: encodeBase64(html),
+      sha,
+    }),
+  });
+
+  if (!commitRes.ok) {
+    const err = await commitRes.text();
+    return jsonResponse({ error: 'GitHub commit failed', detail: err }, 502);
+  }
+
+  return jsonResponse({ success: true });
+}
+
 export default {
   async fetch(request, env) {
+    // Handle CORS preflight
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { status: 204, headers: CORS_HEADERS });
+    }
+
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { status: 405 });
     }
@@ -39,6 +135,12 @@ export default {
     }
 
     const formType = fields._form_type;
+
+    // Admin handler — returns JSON, not a redirect
+    if (formType === 'admin') {
+      return handleAdmin(fields, env);
+    }
+
     let subject, html, senderEmail, senderName;
 
     if (formType === 'quote') {
@@ -94,7 +196,6 @@ export default {
       return Response.redirect('https://axenuk.com/?status=error', 302);
     }
 
-    // Send notification to admin and auto-reply to sender in parallel
     const requests = [
       sendEmail(env, { to: ['admin@axenuk.com'], subject, html }),
     ];
