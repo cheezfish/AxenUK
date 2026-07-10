@@ -141,6 +141,11 @@ export default {
       return handleAdmin(fields, env);
     }
 
+    // Honeypot protection: reject if honeypot field is filled
+    if (fields.website && fields.website.trim() !== '') {
+      return Response.redirect('https://axenuk.com/?status=error', 302);
+    }
+
     let subject, html, senderEmail, senderName;
 
     if (formType === 'quote') {

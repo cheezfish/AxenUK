@@ -226,6 +226,28 @@
                 </div>
             </div>
         </div>
+
+        <!-- DISPLAY SETTINGS SECTION -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-icon" style="background:#fef3c7">⚙️</div>
+                <div>
+                    <div class="section-title">Display Settings</div>
+                </div>
+            </div>
+            <div class="section-body">
+                <div class="field">
+                    <label>Supplier Logos</label>
+                    <div style="display:flex;gap:12px;align-items:center;">
+                        <select id="f-logos-visibility" style="padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:14px;">
+                            <option value="display:block">Show Logos</option>
+                            <option value="display:none">Hide Logos</option>
+                        </select>
+                        <span style="font-size:13px;color:#64748b;">(Hidden for aggregator onboarding)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- STICKY PUSH BAR -->
@@ -249,6 +271,7 @@
         'step1-title','step1-desc',
         'step2-title','step2-desc',
         'step3-title','step3-desc',
+        'logos-visibility',
     ];
 
     let adminPassword = '';
