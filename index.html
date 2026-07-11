@@ -20,6 +20,12 @@
             background: #ffffff;
             border-top: 1px solid #e2e8f0;
         }
+        .marquee-container[data-visibility="none"] {
+            display: none;
+        }
+        .marquee-container[data-visibility="block"] {
+            display: block;
+        }
         .marquee-track {
             display: flex;
             width: max-content;
@@ -106,7 +112,7 @@
         </div>
 
         <!-- Supplier Logos Marquee (Hidden temporarily for aggregator onboarding) -->
-        <div class="absolute bottom-0 w-full z-20 marquee-container py-4" style="<!-- E:logos-visibility -->display:none<!-- /E:logos-visibility ->;">
+        <div class="absolute bottom-0 w-full z-20 marquee-container py-4" data-visibility="<!-- E:logos-visibility -->none<!-- /E:logos-visibility -->"">
             <div class="marquee-track">
                 <div class="marquee-set">
                     <img src="images/logos-webp/BG.webp" alt="British Gas" class="logo-xl">
