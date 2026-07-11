@@ -85,6 +85,14 @@ async function handleAdmin(fields, env) {
 
   // Apply each text change between markers
   for (const [key, value] of Object.entries(changes)) {
+    if (key === 'logos-visibility') {
+      // Special case: this toggles a data-visibility attribute, not comment-delimited text
+      const attrRegex = /(marquee-container py-4" data-visibility=")(none|block)(")/;
+      if (attrRegex.test(html)) {
+        html = html.replace(attrRegex, `$1${value === 'none' ? 'none' : 'block'}$3`);
+      }
+      continue;
+    }
     const regex = new RegExp(`(<!-- E:${key} -->)[\\s\\S]*?(<!-- /E:${key} -->)`);
     if (regex.test(html)) {
       html = html.replace(regex, `$1${value}$2`);
