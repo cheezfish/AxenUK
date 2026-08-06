@@ -57,6 +57,34 @@ function jsonResponse(data, status = 200) {
   });
 }
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Escapes all HTML, then re-allows a small safelist of bare presentational
+// tags (no attributes possible, since an attribute would fail the exact-match
+// regex and stay escaped). Used only for admin-panel content pushes.
+const ADMIN_SAFELIST_TAGS = ['em', 'strong', 'br'];
+function sanitizeAdminValue(str) {
+  let escaped = escapeHtml(str);
+  for (const tag of ADMIN_SAFELIST_TAGS) {
+    escaped = escaped
+      .replace(new RegExp(`&lt;${tag}&gt;`, 'gi'), `<${tag}>`)
+      .replace(new RegExp(`&lt;/${tag}&gt;`, 'gi'), `</${tag}>`)
+      .replace(new RegExp(`&lt;${tag}\\s*/&gt;`, 'gi'), `<${tag}/>`);
+  }
+  return escaped;
+}
+
+function isValidEmail(str) {
+  return typeof str === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
+}
+
 function encodeBase64(str) {
   const bytes = new TextEncoder().encode(str);
   let binary = '';
@@ -71,7 +99,31 @@ function decodeBase64(b64) {
   return new TextDecoder().decode(bytes);
 }
 
-async function handleAdmin(fields, env) {
+const ADMIN_RATE_LIMIT_MAX = 5;
+const ADMIN_RATE_LIMIT_WINDOW_SECONDS = 60;
+
+// KV-backed counter (not perfectly atomic under heavy parallel load, but more
+// than sufficient to make brute-forcing a password impractical). Each hit
+// refreshes the TTL, so the window resets ~60s after the last attempt.
+async function checkAdminRateLimit(env, key) {
+  const kvKey = `admin-login:${key}`;
+  const raw = await env.ADMIN_LOGIN_ATTEMPTS.get(kvKey);
+  const count = raw ? parseInt(raw, 10) : 0;
+  if (count >= ADMIN_RATE_LIMIT_MAX) {
+    return false;
+  }
+  await env.ADMIN_LOGIN_ATTEMPTS.put(kvKey, String(count + 1), {
+    expirationTtl: ADMIN_RATE_LIMIT_WINDOW_SECONDS,
+  });
+  return true;
+}
+
+async function handleAdmin(fields, env, clientIp) {
+  const withinLimit = await checkAdminRateLimit(env, clientIp || 'unknown');
+  if (!withinLimit) {
+    return jsonResponse({ error: 'Too many attempts. Please wait a minute and try again.' }, 429);
+  }
+
   if (fields['password'] !== env.ADMIN_PASSWORD) {
     return jsonResponse({ error: 'Invalid password' }, 401);
   }
@@ -112,7 +164,8 @@ async function handleAdmin(fields, env) {
     }
     const regex = new RegExp(`(<!-- E:${key} -->)[\\s\\S]*?(<!-- /E:${key} -->)`);
     if (regex.test(html)) {
-      html = html.replace(regex, `$1${value}$2`);
+      const safeValue = sanitizeAdminValue(value);
+      html = html.replace(regex, `$1${safeValue.replace(/\$/g, '$$$$')}$2`);
     }
   }
 
@@ -163,7 +216,7 @@ export default {
 
     // Admin handler — returns JSON, not a redirect
     if (formType === 'admin') {
-      return handleAdmin(fields, env);
+      return handleAdmin(fields, env, request.headers.get('CF-Connecting-IP'));
     }
 
     // Honeypot protection: reject if honeypot field is filled
@@ -181,53 +234,58 @@ export default {
 
     let subject, html, senderEmail, senderName;
 
+    // All submitted field values are attacker-controlled — escape before
+    // interpolating into HTML email bodies to prevent injecting fake content,
+    // phishing links, or tracking pixels into notification emails.
+    const f = (key) => escapeHtml(fields[key] || '—');
+
     if (formType === 'quote') {
       senderEmail = fields['Email'];
       senderName = fields['Contact Name'] || fields['Business Name'] || 'Customer';
-      subject = `New Quote Request — ${fields['Business Name'] || 'Unknown Business'}`;
+      subject = `New Quote Request — ${escapeHtml(fields['Business Name'] || 'Unknown Business')}`;
       html = `
         <h2>New Quote Request</h2>
         <table cellpadding="6" style="border-collapse:collapse;width:100%">
-          <tr><td><b>Business Name</b></td><td>${fields['Business Name'] || '—'}</td></tr>
-          <tr><td><b>Contact Name</b></td><td>${fields['Contact Name'] || '—'}</td></tr>
-          <tr><td><b>Site Address</b></td><td>${fields['Site Address'] || '—'}</td></tr>
-          <tr><td><b>Email</b></td><td>${fields['Email'] || '—'}</td></tr>
-          <tr><td><b>Phone</b></td><td>${fields['Phone'] || '—'}</td></tr>
-          <tr><td><b>Mobile</b></td><td>${fields['Mobile'] || '—'}</td></tr>
-          <tr><td><b>Current Suppliers</b></td><td>${fields['Current Suppliers'] || '—'}</td></tr>
-          <tr><td><b>Contract End Date</b></td><td>${fields['Contract End Date'] || '—'}</td></tr>
-          <tr><td><b>Meter Serial Numbers</b></td><td>${fields['Meter Serial Numbers'] || '—'}</td></tr>
-          <tr><td><b>Special Circumstances</b></td><td>${fields['Special Circumstances'] || '—'}</td></tr>
+          <tr><td><b>Business Name</b></td><td>${f('Business Name')}</td></tr>
+          <tr><td><b>Contact Name</b></td><td>${f('Contact Name')}</td></tr>
+          <tr><td><b>Site Address</b></td><td>${f('Site Address')}</td></tr>
+          <tr><td><b>Email</b></td><td>${f('Email')}</td></tr>
+          <tr><td><b>Phone</b></td><td>${f('Phone')}</td></tr>
+          <tr><td><b>Mobile</b></td><td>${f('Mobile')}</td></tr>
+          <tr><td><b>Current Suppliers</b></td><td>${f('Current Suppliers')}</td></tr>
+          <tr><td><b>Contract End Date</b></td><td>${f('Contract End Date')}</td></tr>
+          <tr><td><b>Meter Serial Numbers</b></td><td>${f('Meter Serial Numbers')}</td></tr>
+          <tr><td><b>Special Circumstances</b></td><td>${f('Special Circumstances')}</td></tr>
         </table>
       `;
     } else if (formType === 'join') {
       senderEmail = fields['Email Address'];
       senderName = fields['Name'] || 'Applicant';
-      subject = `New Partner Application — ${fields['Name'] || 'Unknown'}`;
+      subject = `New Partner Application — ${escapeHtml(fields['Name'] || 'Unknown')}`;
       html = `
         <h2>New Partner Application</h2>
         <table cellpadding="6" style="border-collapse:collapse;width:100%">
-          <tr><td><b>Name</b></td><td>${fields['Name'] || '—'}</td></tr>
-          <tr><td><b>Business Name</b></td><td>${fields['Business Name'] || '—'}</td></tr>
-          <tr><td><b>Company Address</b></td><td>${fields['Company Address'] || '—'}</td></tr>
-          <tr><td><b>Trading Address</b></td><td>${fields['Trading Address'] || '—'}</td></tr>
-          <tr><td><b>Phone Number</b></td><td>${fields['Phone Number'] || '—'}</td></tr>
-          <tr><td><b>Mobile Number</b></td><td>${fields['Mobile Number'] || '—'}</td></tr>
-          <tr><td><b>Email Address</b></td><td>${fields['Email Address'] || '—'}</td></tr>
-          <tr><td><b>Website</b></td><td>${fields['Website'] || '—'}</td></tr>
-          <tr><td><b>ADR Registration Number</b></td><td>${fields['ADR Registration Number'] || '—'}</td></tr>
+          <tr><td><b>Name</b></td><td>${f('Name')}</td></tr>
+          <tr><td><b>Business Name</b></td><td>${f('Business Name')}</td></tr>
+          <tr><td><b>Company Address</b></td><td>${f('Company Address')}</td></tr>
+          <tr><td><b>Trading Address</b></td><td>${f('Trading Address')}</td></tr>
+          <tr><td><b>Phone Number</b></td><td>${f('Phone Number')}</td></tr>
+          <tr><td><b>Mobile Number</b></td><td>${f('Mobile Number')}</td></tr>
+          <tr><td><b>Email Address</b></td><td>${f('Email Address')}</td></tr>
+          <tr><td><b>Website</b></td><td>${f('Website')}</td></tr>
+          <tr><td><b>ADR Registration Number</b></td><td>${f('ADR Registration Number')}</td></tr>
         </table>
       `;
     } else if (formType === 'contact') {
       senderEmail = fields['Email'];
       senderName = fields['Name'] || 'Visitor';
-      subject = `New Message from ${fields['Name'] || 'Unknown'}`;
+      subject = `New Message from ${escapeHtml(fields['Name'] || 'Unknown')}`;
       html = `
         <h2>New Contact Message</h2>
         <table cellpadding="6" style="border-collapse:collapse;width:100%">
-          <tr><td><b>Name</b></td><td>${fields['Name'] || '—'}</td></tr>
-          <tr><td><b>Email</b></td><td>${fields['Email'] || '—'}</td></tr>
-          <tr><td><b>Message</b></td><td>${fields['Message'] || '—'}</td></tr>
+          <tr><td><b>Name</b></td><td>${f('Name')}</td></tr>
+          <tr><td><b>Email</b></td><td>${f('Email')}</td></tr>
+          <tr><td><b>Message</b></td><td>${f('Message')}</td></tr>
         </table>
       `;
     } else {
@@ -238,7 +296,7 @@ export default {
       sendEmail(env, { to: ['admin@axenuk.com'], subject, html }),
     ];
 
-    if (senderEmail) {
+    if (isValidEmail(senderEmail)) {
       requests.push(sendEmail(env, {
         to: [senderEmail],
         subject: 'Thank you for contacting Axen Business House (UK) Limited',
