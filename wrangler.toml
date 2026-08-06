@@ -1,0 +1,3 @@
+name = "axenuk-forms"
+main = "worker.js"
+compatibility_date = "2026-05-10"
