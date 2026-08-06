@@ -17,6 +17,21 @@ const AUTO_REPLY_HTML = `
 </div>
 `;
 
+async function verifyTurnstile(token, remoteIp, env) {
+  if (!token) return false;
+  const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      secret: env.TURNSTILE_SECRET_KEY,
+      response: token,
+      remoteip: remoteIp,
+    }),
+  });
+  const data = await res.json();
+  return data.success === true;
+}
+
 async function sendEmail(env, { to, subject, html }) {
   return fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -151,6 +166,14 @@ export default {
 
     // Honeypot protection: reject if honeypot field is filled
     if (fields.website && fields.website.trim() !== '') {
+      return Response.redirect('https://axenuk.com/?status=error', 302);
+    }
+
+    // Turnstile protection: verify the challenge token server-side
+    const turnstileToken = fields['cf-turnstile-response'];
+    const remoteIp = request.headers.get('CF-Connecting-IP');
+    const turnstileOk = await verifyTurnstile(turnstileToken, remoteIp, env);
+    if (!turnstileOk) {
       return Response.redirect('https://axenuk.com/?status=error', 302);
     }
 

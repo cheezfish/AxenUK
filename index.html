@@ -7,6 +7,7 @@
     <meta name="description" content="Axen Business House (UK) Limited — independent energy consultants helping SME and enterprise businesses across the UK find the most competitive electricity, gas and water prices from the live energy market.">
 
     <link rel="preload" as="font" href="fonts/inter-latin-wght-normal.woff2" type="font/woff2" crossorigin>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
     <!-- Tailwind CSS -->
     <style data-inline-css>@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(fonts/inter-latin-wght-normal.woff2) format("woff2");unicode-range:u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd}*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }
@@ -307,6 +308,8 @@
                     <textarea id="special-circumstances" name="Special Circumstances" rows="3" placeholder="e.g., Change of tenancy, New Main Line Connection Required, New Meter Required..." class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent focus:ring-1 focus:ring-brand-accent outline-none transition text-white"></textarea>
                 </div>
 
+                <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+
                 <button type="submit" class="w-full py-4 px-6 bg-brand-blue hover:bg-blue-600 text-white font-bold text-lg rounded-lg shadow-lg transition">
                     SUBMIT
                 </button>
@@ -344,6 +347,7 @@
                         <input type="url" name="Website" placeholder="Website" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
                     </div>
                     <input type="text" name="ADR Registration Number" placeholder="ADR Registration Number" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:border-brand-blue outline-none">
+                    <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
                     <button type="submit" class="w-full py-3 bg-brand-dark hover:bg-slate-800 text-white font-bold rounded-lg transition">Submit Application</button>
                 </div>
             </form>
@@ -422,6 +426,7 @@
                         <input type="text" name="Name" placeholder="Your Name" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent outline-none text-white">
                         <input type="email" name="Email" placeholder="Your Email" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent outline-none text-white">
                         <textarea name="Message" rows="4" placeholder="Your Message" required class="w-full px-4 py-3 bg-brand-dark/50 border border-white/20 rounded-lg focus:border-brand-accent outline-none text-white"></textarea>
+                        <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
                         <button type="submit" class="w-full py-4 bg-brand-blue hover:bg-blue-600 text-white font-bold rounded-lg transition">
                             SEND
                         </button>
