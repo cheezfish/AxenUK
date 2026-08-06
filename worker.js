@@ -1,8 +1,10 @@
 const GITHUB_REPO = 'cheezfish/AxenUK';
 const GITHUB_FILE = 'index.html';
 
+const ALLOWED_ORIGIN = 'https://axenuk.com';
+
 const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
 };
