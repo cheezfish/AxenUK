@@ -23,7 +23,7 @@ async function verifyTurnstile(token, remoteIp, env) {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      secret: env.TURNSTILE_SECRET_KEY,
+      secret: env.TURNSTILE_SECRET,
       response: token,
       remoteip: remoteIp,
     }),
