@@ -31,6 +31,7 @@ async function verifyTurnstile(token, remoteIp, env) {
     }),
   });
   const data = await res.json();
+  console.log('turnstile-debug', JSON.stringify({ hasSecret: !!env.TURNSTILE_SECRET, tokenLen: token.length, remoteIp, data }));
   return data.success === true;
 }
 
@@ -101,25 +102,27 @@ function decodeBase64(b64) {
 
 const ADMIN_RATE_LIMIT_MAX = 5;
 const ADMIN_RATE_LIMIT_WINDOW_SECONDS = 60;
+const FORM_RATE_LIMIT_MAX = 5;
+const FORM_RATE_LIMIT_WINDOW_SECONDS = 600;
 
 // KV-backed counter (not perfectly atomic under heavy parallel load, but more
-// than sufficient to make brute-forcing a password impractical). Each hit
-// refreshes the TTL, so the window resets ~60s after the last attempt.
-async function checkAdminRateLimit(env, key) {
-  const kvKey = `admin-login:${key}`;
+// than sufficient to make brute-forcing or flooding impractical). Each hit
+// refreshes the TTL, so the window resets after the last attempt.
+async function checkRateLimit(env, prefix, key, max, windowSeconds) {
+  const kvKey = `${prefix}:${key}`;
   const raw = await env.ADMIN_LOGIN_ATTEMPTS.get(kvKey);
   const count = raw ? parseInt(raw, 10) : 0;
-  if (count >= ADMIN_RATE_LIMIT_MAX) {
+  if (count >= max) {
     return false;
   }
   await env.ADMIN_LOGIN_ATTEMPTS.put(kvKey, String(count + 1), {
-    expirationTtl: ADMIN_RATE_LIMIT_WINDOW_SECONDS,
+    expirationTtl: windowSeconds,
   });
   return true;
 }
 
 async function handleAdmin(fields, env, clientIp) {
-  const withinLimit = await checkAdminRateLimit(env, clientIp || 'unknown');
+  const withinLimit = await checkRateLimit(env, 'admin-login', clientIp || 'unknown', ADMIN_RATE_LIMIT_MAX, ADMIN_RATE_LIMIT_WINDOW_SECONDS);
   if (!withinLimit) {
     return jsonResponse({ error: 'Too many attempts. Please wait a minute and try again.' }, 429);
   }
@@ -221,6 +224,12 @@ export default {
 
     // Honeypot protection: reject if honeypot field is filled
     if (fields.website && fields.website.trim() !== '') {
+      return Response.redirect('https://axenuk.com/?status=error', 302);
+    }
+
+    // Per-IP rate limit: caps how many emails a single flooding source can trigger
+    const formWithinLimit = await checkRateLimit(env, 'form-submit', request.headers.get('CF-Connecting-IP') || 'unknown', FORM_RATE_LIMIT_MAX, FORM_RATE_LIMIT_WINDOW_SECONDS);
+    if (!formWithinLimit) {
       return Response.redirect('https://axenuk.com/?status=error', 302);
     }
 
